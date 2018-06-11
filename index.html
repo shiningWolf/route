@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+		<script src="route.js"></script>
+		<style>
+			ul{
+				list-style: none;
+				display: block;
+				overflow: hidden;
+			}
+			ul li{
+				float:left;
+				margin-left:10px;
+				cursor: pointer
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<ul>
+				<li @click="$router.replace('/one')">1</li>
+				<li @click="$router.replace('/two')">2</li>
+				<li @click="$router.replace('/three')">3</li>
+			</ul>
+			<div :is="currentComponent">
+			</div>
+		</div>
+		<script>
+			
+			Vue.component('tab-1', { 
+				template: '<div>1 component</div>' 
+			})
+			Vue.component('tab-2', { 
+				template: '<div>2 component</div>' 
+			})
+			Vue.component('tab-3', { 
+				template: '<div>3 component</div>' 
+			})
+			new Vue({
+			  el: '#app',
+			  data(){
+			  	return {
+			  		test:2,
+			  		currentComponent:'tab-1',
+			  		'$route':''
+			  	}
+			  },
+			  created(){
+			  	var router = new Router();
+
+				router.route('/one',()=>{
+					this.currentComponent = 'tab-1';
+				})
+				router.route('/two',()=>{
+					this.currentComponent = 'tab-2';
+				})
+				router.route('/three',()=>{
+					this.currentComponent = 'tab-3';
+				})
+				this.$router = router;
+			  }
+			})
+		</script>
+	</body>
+</html>
